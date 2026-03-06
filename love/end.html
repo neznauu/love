@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Титры</title>
+<style>
+html, body {
+  margin:0;
+  padding:0;
+  height:100%;
+  overflow:hidden;
+}
+
+body {
+background-image: url('image/end.jpg');
+background-position: center;
+background-repeat: no-repeat;
+background-size: contain;
+background-color: black; /* если экран шире/выше, появляются поля */
+font-family: "Segoe UI", sans-serif;
+color: white;
+}
+
+/* контейнер для титров сверху */
+.titles-container{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:50%; /* верхняя половина экрана для текста */
+overflow:hidden;
+}
+
+/* текст титров */
+.credits{
+position:absolute;
+top:50%;
+width:50%;
+text-align:center;
+font-size:32px;
+line-height:2;
+white-space:pre-line;
+animation:scroll 35s linear forwards;
+padding:0 120px;
+}
+
+@keyframes scroll{
+from{top:100%}
+to{top:-200%}
+}
+
+/* контейнер для love.jpg */
+.love-container {
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%, -50%);
+width:50%;
+height:70%;
+display:flex;
+justify-content:center;
+align-items:center;
+overflow:hidden;
+}
+
+.love-container img {
+width:100%;
+height:100%;
+object-fit:contain;  /* сохраняет пропорции */
+opacity:0;
+transition:opacity 2s, transform 2s;
+} </style>
+
+</head>
+<body>
+  <script src="audio.js"></script>
+
+<!-- титры -->
+
+<div class="titles-container">
+  <div class="credits" id="credits">
+спасибо, что досмотрела<br>
+  
+так много времени ушло, ужас.<br>
+  
+много косяков и недочетов. но я старался<br>
+  </div>
+</div>
+
+<!-- картинка love.jpg -->
+
+<div class="love-container">
+  <img src="image/love.jpg" id="love">
+</div>
+
+<script>
+// Появление картинки love после окончания прокрутки титров
+setTimeout(()=>{
+  const love = document.getElementById('love');
+  love.style.opacity = 1;
+  love.style.transform = "scale(1.1)"; // лёгкий zoom
+},35000);
+</script>
+
+</body>
+</html>

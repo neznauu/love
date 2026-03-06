@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Наша история</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Segoe UI, sans-serif;
+}
+
+body{
+background:black;
+overflow:hidden;
+color:white;
+}
+
+/* сцены */
+
+.scene{
+position:absolute;
+width:100%;
+height:100vh;
+background-size:cover;
+background-position:center;
+opacity:0;
+transition:2s;
+}
+
+.scene.active{
+opacity:1;
+z-index:2;
+}
+
+.overlay{
+position:absolute;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.35);
+}
+
+/* подписи снизу */
+
+.caption{
+position:absolute;
+bottom:70px;
+width:100%;
+text-align:center;
+font-size:30px;
+line-height:1.4;
+opacity:0;
+transform:translateY(20px);
+animation:fade 2s forwards;
+animation-delay:1.5s;
+padding:0 20px;
+}
+
+@keyframes fade{
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+/* чат */
+
+.chat{
+position:absolute;
+bottom:40px;
+width:100%;
+display:flex;
+flex-direction:column;
+gap:10px;
+padding:0 20px;
+}
+
+.msg{
+max-width:260px;
+padding:10px 14px;
+border-radius:16px;
+font-size:16px;
+opacity:0;
+transform:translateY(10px);
+animation:msg 0.5s forwards;
+}
+
+.me{
+align-self:flex-start;
+background:#2b7cff;
+}
+
+.her{
+align-self:flex-end;
+background:#444;
+}
+
+@keyframes msg{
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+/* финальный текст */
+
+.finalText{
+position:absolute;
+bottom:100px;
+width:100%;
+display:flex;
+justify-content:center;
+}
+
+#speech{
+max-width:720px;
+text-align:center;
+font-size:34px;
+line-height:1.6;
+white-space:pre-line;
+text-shadow:0 0 25px rgba(255,255,255,0.6);
+}
+
+.line{
+opacity:0;
+transform:translateY(20px);
+animation:lineAppear 1.2s forwards;
+}
+
+@keyframes lineAppear{
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+</style>
+
+</head>
+
+<body>
+    
+    <script src="audio.js"></script>
+
+<!-- СЦЕНА 1 ЧАТ -->
+
+<div class="scene active" style="background-image:url('image/1.jpg')">
+
+<div class="overlay"></div>
+
+<div class="chat" id="chat"></div>
+
+</div>
+
+<!-- ЛАВОЧКА -->
+
+<div class="scene" style="background-image:url('image/2.jpg')">
+<div class="overlay"></div>
+<div class="caption">
+Иногда обычный разговор<br>
+становится началом<br>
+чего-то особенного.
+</div>
+</div>
+
+<!-- КИНО -->
+
+<div class="scene" style="background-image:url('image/3.jpg')">
+<div class="overlay"></div>
+<div class="caption">
+Даже обычный вечер в кино<br>
+рядом с тобой<br>
+становился особенным.
+</div>
+</div>
+
+<!-- ССОРА -->
+
+<div class="scene" style="background-image:url('image/4.jpg')">
+<div class="overlay"></div>
+<div class="caption">
+Но я посутпил так,<br>
+о чем безумно жалею.
+</div>
+</div>
+
+<!-- ГРУСТЬ -->
+
+<div class="scene" style="background-image:url('image/5.jpg')">
+<div class="overlay"></div>
+<div class="caption">
+Я не хотел обидеть тебя.<br>
+Не хотел, что вышло.. так.
+</div>
+</div>
+
+<!-- ПРОЩЕНИЕ -->
+
+<div class="scene" style="background-image:url('image/6.jpg')">
+<div class="overlay"></div>
+<div class="caption">
+Я прошу<br>
+сделать шаг навстречу.
+</div>
+</div>
+
+<!-- СЧАСТЛИВАЯ ЖИЗНЬ -->
+
+<div class="scene" style="background-image:url('image/7.jpg')">
+<div class="overlay"></div>
+<div class="caption">
+Потому что настоящие чувства<br>
+сильнее любой ссоры.
+</div>
+</div>
+
+<!-- ФИНАЛ -->
+
+<div class="scene" style="background-image:url('image/8.jpg')">
+
+<div class="overlay"></div>
+
+<div class="finalText">
+<div id="speech"></div>
+</div>
+
+</div>
+
+<script>
+
+/* смена сцен */
+
+const scenes=document.querySelectorAll(".scene")
+let current=0
+
+function next(){
+
+scenes[current].classList.remove("active")
+
+current++
+
+if(current<scenes.length){
+scenes[current].classList.add("active")
+}
+
+}
+
+setTimeout(next,9000)
+setTimeout(next,15000)
+setTimeout(next,21000)
+setTimeout(next,27000)
+setTimeout(next,33000)
+setTimeout(next,39000)
+setTimeout(next,45000)
+
+
+
+/* чат */
+
+const messages=[
+{type:"me",text:"приветик"},
+{type:"me",text:"как ты?"},
+{type:"her",text:"привет"},
+{type:"her",text:"у меня всё хорошо"},
+{type:"her",text:"а у тебя?"}
+]
+
+const chat=document.getElementById("chat")
+
+messages.forEach((m,i)=>{
+
+setTimeout(()=>{
+
+let d=document.createElement("div")
+d.className="msg "+m.type
+d.innerText=m.text
+
+chat.appendChild(d)
+
+},i*1200)
+
+})
+
+
+
+/* финальная речь */
+
+const lines=[
+
+"знаешь…",
+
+"я долго думал",
+"я не знаю что говорить",
+
+"",
+"но понял одну вещь",
+
+"",
+"я не хочу быть без тебя",
+
+"",
+"я не хочу такого конца у нас",
+"хочу чтобы всё было по-другому",
+
+"",
+"я сделал тебе больно",
+"мне искренне жаль",
+
+"",
+"ты для меня",
+"намного больше",
+"чем просто человек",
+
+"",
+"и если есть шанс",
+"всё исправить",
+
+"",
+"я очень хочу",
+"начать заново",
+
+"",
+"прости меня"
+
+]
+
+let i=0
+
+const speech=document.getElementById("speech")
+
+function nextLine(){
+
+if(i<lines.length){
+
+let div=document.createElement("div")
+
+div.className="line"
+
+div.textContent=lines[i]
+
+speech.appendChild(div)
+
+i++
+
+setTimeout(nextLine,1700)
+
+}
+
+}
+
+setTimeout(nextLine,47000)
+
+// Перенаправление на end.html после завершения финальной речи
+// Используем длину массива `lines`, чтобы посчитать время окончательного переноса
+const redirectDelay = 47000 + (lines.length * 1700) + 3000; // буфер 3s
+setTimeout(() => {
+    window.location.href = 'end.html';
+}, redirectDelay);
+
+</script>
+
+</body>
+</html>
